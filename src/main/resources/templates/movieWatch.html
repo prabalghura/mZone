@@ -1,0 +1,37 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorator="default">
+
+<body>
+    <div layout:fragment="content" class="row">
+        <div class="col-xs-8 col-md-8" align="center" style="background-color:#222222;height: 580px;">
+        	<div th:if="${movie != null}">
+        		<div class="content">
+					<h1>Watching <a style="color:#FFFFFF;" th:href="${'/movie?id='+movie.id}" th:text="${movie.title}"/></h1>
+					
+					<p>
+						<span class="tag is-rounded is-warning" th:text="${movie.rated}"/>
+					</p>
+					
+					<p style="color:#FFFFFF;">
+						<span>Directed by </span>
+						<span th:each="director : ${movie.directors}">
+							<a style="color:#FFFFFF;" th:href="${'/movies?textSearch='+director}" th:text="${director}"/>, 
+						</span>
+						<span th:text="${movie.year}"/>
+						<br/>
+						<span>Runtime:</span>
+						<span th:text="${(movie.runtime / 60) +'hr '+(movie.runtime % 60)+'min'}" class="tag is-white"/>
+					</p>
+					
+					<div style="border: 1px white solid; width: 562px;">
+						<iframe width="560" height="315" frameborder="0" allowfullscreen="allowfullscreen"
+						th:src="${'https://www.youtube.com/embed/'+(movie.year%2==0?'D3g1BH6Yo8M':'kWUQbhbqvqo')+'?autoplay=1'}"/>
+					</div>
+				</div>
+        	</div>
+        	<div th:unless="${movie != null}" style="color:#FFFFFF;" th:include="partials/noMovie"/>
+        </div>
+    </div>
+</body>
+
+</html>

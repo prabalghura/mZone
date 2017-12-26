@@ -1,0 +1,34 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorator="default">
+
+<body>
+    <div layout:fragment="content" class="row">
+        <div class="col-xs-8 col-md-8" align="center" style="background-color:#222222;overflow-y: auto; height: 616px;">
+        	<div th:if="${movie != null}">
+        		<div class="content">
+        			<div th:if="${not #lists.isEmpty(movie.comments)}">
+						<h1>
+							all <span th:text="${movie.num_mZone_comments}"/> comments for 
+							<a th:href="@{'/movie?id=' + ${movie.id}}" th:text="${movie.title}" style="color:#FFFFFF;"/>
+						</h1>
+						<div th:include="partials/movieBasicInfo" style="color: #FFFFFF;"/>
+						<hr/>
+						<div th:include="partials/commentForm"/>
+						<hr/>
+						<div th:with="comments=${older_comments}" th:include="partials/commentList" style="color:#FFFFFF;"/>
+        			</div>
+        			<div th:unless="${not #lists.isEmpty(movie.comments)}">
+						<h1>
+							no comments yet for
+							<a th:href="@{'/movie?id=' + ${movie.id}}" th:text="${movie.title}" style="color:#FFFFFF;"/>
+						</h1>
+						<div th:include="partials/commentForm"/>
+        			</div>
+				</div>
+        	</div>
+        	<div th:unless="${movie != null}" style="color:#FFFFFF;" th:include="partials/noMovie"/>
+        </div>
+    </div>
+</body>
+
+</html>

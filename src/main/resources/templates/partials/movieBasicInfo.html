@@ -1,0 +1,14 @@
+<p>
+	<span class="tag is-rounded is-warning" th:text="${#strings.isEmpty(movie.rated) ? 'No rating found.' : movie.rated}"/>
+</p>
+
+<p>
+	<span>Directed by </span>
+	<span th:each="director : ${movie.directors}">
+		<a style="color:#FFFFFF;" th:href="${'/movies?textSearch='+director}" th:text="${director}"/>, 
+	</span>
+	<span th:text="${movie.year}"/>
+	<br/>
+	<span>Runtime:</span>
+	<span th:text="${(movie.runtime / 60) +'hr '+(movie.runtime % 60)+'min'}" class="tag is-white"/>
+</p>

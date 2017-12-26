@@ -1,0 +1,25 @@
+<div th:with="rating_out_of_100=${(rating * 100) / MAX_RATING}">
+	<div th:with="progress_color=${rating_out_of_100>=80 ? 'success' : (rating_out_of_100>=60 ? 'info' : 'danger')}">
+		<div th:if="${VALID_RATING and CONDENSED_RATING}">
+			<p>
+				<span style="color: #f2f2f2;"><span th:text="${RATING_NAME}"/> Rating:</span>
+				<span class="tag" th:classappend="${'is-'+progress_color}" th:text="${rating + '/' + MAX_RATING}"/>
+			</p>
+		</div>
+		<div th:if="${VALID_RATING and !CONDENSED_RATING}">
+			<p>
+				<span><span th:text="${RATING_NAME}"/> Rating:</span>
+				<span th:if="MAX_RATING == 100" th:text="${rating}"/>
+				<span th:unless="MAX_RATING == 100" th:text="${rating + '/' + MAX_RATING}"/>
+			
+				<span th:if="${!#strings.isEmpty(votes)}">
+					<small>(from  
+						<span th:text="${#numbers.formatDecimal(votes, 0, 'COMMA', 0, 'POINT')}"/>
+						<span th:text="${RATING_NAME}"/> reviews)
+					 </small>
+				</span>
+			</p>
+			<progress align="left" class="progress" th:classappend="${'is-'+progress_color}" th:value="${rating_out_of_100}" th:text="${rating_out_of_100}+'%'" max="100"/>
+		</div>
+	</div>
+</div>

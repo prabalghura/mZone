@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+    <head>
+        <meta charset="UTF-8"/>
+        <title>mZone</title>
+        <link rel="stylesheet" href="/css/style.css" />
+        <script src="https://use.fontawesome.com/7e72056939.js"></script>
+    </head>
+    <body>
+        <div style="margin-top:-10px;">
+		    <nav class="level" style="padding: 0% 5% 0%;">
+		
+		        <div align="left" style="width: 350px;">
+		            <form action="/movies" method="get">
+		                <div>
+		                    <div class="field has-addons">
+		                        <span class="control">
+									<input class="input" style="width: 250px" type="text" name="textSearch" placeholder="find a movie or person"/>
+								</span>
+								<input type="hidden" name="genres" th:value="${genres}" />
+		                        <span class="control">
+									<input type="submit" class="button is-primary" value="Search"/>
+								</span>
+		                    </div>
+		                </div>
+		            </form>
+		        </div>
+		
+		        <div class="level-item has-text-centered">
+					<h1 class="title is-1" style="margin: 0px;">
+						<a href="/movies" style="text-decoration: none;">mZone</a>
+					</h1>
+		        </div>
+		
+		        <div align="right" style="width: 350px;">
+		        <div th:with="uri=${#httpServletRequest.requestURI},query=${#httpServletRequest.queryString}">
+	        		<div th:with="fullPath=${uri+(#strings.isEmpty(query)?'':'?'+query)}">
+			            <div class="inline-block">
+			            	<div th:if="${currentUser != null}">
+				                <a class="button is-primary" href="/userProfile">Hi,&nbsp;
+				                	<span th:text="${currentUser.firstName}"></span>
+				                </a>
+				                <a class="button" th:href="${'/logout?loginPath='+fullPath}">Log out</a> 
+				            </div>
+			                <div th:if="${currentUser == null}">
+				                <a class="button is-primary" th:href="${'/login?loginPath='+fullPath}">Log in/Sign Up</a>
+			                </div>
+			            </div>
+	        		</div>
+	        	</div>
+		        </div>
+		
+		    </nav>
+		    <hr style="margin:0px;"/>
+		</div>
+
+        <div class="container">
+            <div class="starter-template" layout:fragment="content"></div>
+        </div><!-- /.container -->
+
+        <!-- <script src="/webjars/jquery/1.11.1/jquery.min.js"></script>
+        <script src="/webjars/bootstrap/3.3.7/js/bootstrap.min.js"></script> -->
+    </body>
+</html>

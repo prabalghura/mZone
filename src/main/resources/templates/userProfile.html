@@ -1,0 +1,56 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorator="default">
+
+<body>
+    <div layout:fragment="content" class="row">
+        <div class="col-xs-8 col-md-8" align="center">
+            <div>
+
+                <div class="column is-4">
+                    <div th:if="${passwordError != null}">
+                        <div class="notification is-danger">
+                            There's an error with Changing Password. <span th:text="${passwordError}"></span>
+                        </div>
+                    </div>
+                    <div th:if="${passwordSuccess != null}">
+                        <div class="notification">
+                            Password has been changed successfully.
+                        </div>
+                    </div>
+					<h1 class="title is-3" th:text="${currentUser.name}"></h1>
+					<h2 class="subtitle is-5" th:text="${currentUser.email}"></h2>
+                    <form action="/changePassword" style="width:400px;">
+                        <div class="field">
+                            <p class="control has-icons-left">
+                                <input class="input" type="password" placeholder="Password" name="password" th:required="required"/>
+                                <span class="icon is-small is-left">
+									<i class="fa fa-lock"></i>
+								</span>
+                            </p>
+                        </div>
+                        <div class="field">
+                            <p class="control has-icons-left">
+                                <input class="input" type="password" placeholder="Confirm Password" name="confirmpassword" th:required="required"/>
+                                <span class="icon is-small is-left">
+									<i class="fa fa-lock"></i>
+								</span>
+                            </p>
+                        </div>
+                        
+                        <input type="hidden" name="email" th:value="${currentUser.email}" />
+
+                        <div class="field">
+                            <p class="control">
+                                <button type="submit" class="button is-primary">Change Password</button>
+                            </p>
+                        </div>
+
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,20 @@
+<article th:each="comment : ${comments}" class="media">
+	<div class="media-content">
+		<div class="content" style="margin-left:10px; margin-right:10px;">
+			<p align="justify">
+				<strong th:text="${comment.name}"/>
+				<small th:text="${'commented on '+comment.dateFormatted+'.'}"/>
+			</p>
+			<div style="display:flex">
+				<blockquote style="width:100%" align="justify" th:text="${comment.text}"/>
+				<div style="margin-left:10px; height:100%" th:if="${currentUser!=null and currentUser.email == comment.email}">
+					<form action="/deleteComment" method="post">
+						<input type="hidden" name="movieId" th:value="${movie.id}" />
+						<input type="hidden" name="commentId" th:value="${comment.id}" />
+						<input class="button is-danger" type="submit" value="Delete"/>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+</article>

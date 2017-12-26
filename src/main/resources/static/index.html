@@ -1,0 +1,23 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <title>mZone</title>
+        <script type="text/javascript">
+        	function movieRedirect(i) {
+        		if(i==0)
+       			{
+        			window.location.href = "/movies";
+        			return;
+       			}
+        		document.getElementById("timer").innerText = i;
+           		setTimeout(function(){ movieRedirect(i-1) }, 1000);
+        	}
+        </script>
+    </head>
+    <body onload="movieRedirect(5)">
+    	<div align="center">
+	    	<p>Redirecting in <span id="timer">&nbsp;</span> seconds...</p>
+	        <p><a href="/movies">Go to app</a></p>
+    	</div>
+    </body>
+</html>

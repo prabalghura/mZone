@@ -1,0 +1,1 @@
+{"options":{},"indexes":[{"v":2,"key":{"_id":1},"name":"_id_","ns":"mzone.comments"},{"v":2,"key":{"movie_id":1,"date":-1},"name":"movie_id_1_date_-1","ns":"mzone.comments"},{"v":2,"key":{"movieId":1,"date":-1},"name":"movieId_1_date_-1","ns":"mzone.comments"}],"uuid":"296674143b554d7a989751d0ef8c5401"}

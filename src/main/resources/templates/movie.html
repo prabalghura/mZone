@@ -1,0 +1,95 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorator="default">
+
+<body>
+    <div layout:fragment="content" class="row">
+        <div class="col-xs-8 col-md-8" align="center" style="background-color:#222222;overflow-y: auto; height: 616px;">
+        	<div th:if="${movie != null}">
+	        	<div th:if="${new_comment != null}" class="comment-notification content is-half">
+					<div class="notification is-dark content">
+						<h6 style="margin-bottom:0;" th:text="${currentUser.firstName+', thanks for posting a comment and joining the conversation!'}"/>
+						<blockquote style="background-color: #505050; color:#FFFFFF;" th:text="${new_comment}"/>
+					</div>
+					<hr/>
+				</div>
+				<div class="columns content" style="width:1245px;color:#FFFFFF">
+					<div class="column is-half">
+						<div class="content">
+							<h1 th:text="${movie.title}"/>
+							<div th:include="partials/movieBasicInfo"/>
+							<blockquote align="justify" th:text="${movie.fullPlot}"/>
+							<hr/>
+							<div style="color: #f2f2f2;" th:with="RATING_NAME=${'Metacritic'},CONDENSED_RATING=${false},
+							VALID_RATING=${movie.metacritic == null ? false : true}">
+								<div th:with="MAX_RATING=${100},rating=${movie.metacritic}" th:if="${VALID_RATING}"
+								th:include="partials/ratingbar"/>
+							</div>
+							<div style="color: #f2f2f2;" th:with="RATING_NAME=${'IMDB'},CONDENSED_RATING=${false},
+							VALID_RATING=${(#strings.isEmpty(movie.imdb.rating) and #strings.isEmpty(movie.imdb.rating)) ? false : true}">
+								<div th:with="MAX_RATING=${10},rating=${movie.imdb.rating},votes=${movie.imdb.votes}" 
+								th:if="${VALID_RATING}" th:include="partials/ratingbar"/>
+							</div>
+							<div style="color: #f2f2f2;" th:with="RATING_NAME=${'Rotten Tomatoes'},CONDENSED_RATING=${false},
+							VALID_RATING=${(movie.tomatoes!=null and movie.tomatoes.viewer!=null and movie.tomatoes.viewer.rating!=null
+							and movie.tomatoes.viewer.numReviews!=null) ? true : false}">
+								<div th:with="MAX_RATING=${100},rating=${movie.tomatoes.viewer.rating*20},votes=${movie.tomatoes.viewer.numReviews}" 
+								th:if="${VALID_RATING}" th:include="partials/ratingbar"/>
+							</div>
+			
+							<h5>Genres</h5>
+							<div class="tags">
+								<div th:if="${not #lists.isEmpty(movie.genres)}">
+									<a th:each="genre : ${movie.genres}" class="tag button is-small is-dark" th:href="${'/movies?genres='+genre}" 
+									th:text="${genre}"/>										
+								</div>
+								<div th:unless="${not #lists.isEmpty(movie.genres)}">No genres to show.</div>
+							</div>
+			
+							<h5>Cast</h5>
+							<div class="tags">
+								<div th:if="${not #lists.isEmpty(movie.cast)}">
+									<a th:each="actor : ${movie.cast}" class="tag button is-small is-info" th:href="${'/movies?textSearch='+actor}" 
+									th:text="${actor}"/>										
+								</div>
+								<div th:unless="${not #lists.isEmpty(movie.cast)}">No actors to show.</div>
+							</div>
+
+							<h5>Writers</h5>
+							<div class="tags">
+								<div th:if="${not #lists.isEmpty(movie.writers)}">
+									<span th:each="writer : ${movie.writers}" class="tag is-small" th:text="${writer}"/>
+								</div>
+								<div th:unless="${not #lists.isEmpty(movie.writers)}">No writers to show.</div>
+							</div>
+			
+							<p><a class="button" th:href="${'http://www.imdb.com/title/'+movie.imdb.imdbID}">View On IMDB</a></p>
+			    		</div>
+					</div>
+					<div class="column content is-half has-text-centered">
+						<img th:src="${!#strings.isEmpty(movie.poster) ? movie.poster : 'http://www.reelviews.net/resources/img/default_poster.jpg'}" 
+								alt="No movie image found." style="margin-top:30px; height:500px;"/>
+						<h1 style="margin-top:15px;">
+							<a class="button is-primary is-medium" th:href="${'/movieWatch?id='+movie.id}" th:text="${'Watch '+#strings.abbreviate(movie.title,57)}"/>
+						</h1>
+					</div>
+				</div>
+					
+				<hr/>
+				
+				<div th:include="partials/commentForm"/>
+				
+				<hr/>
+				
+				<div th:with="comments=${movie.comments}" class="content" style="color:#FFFFFF;" th:include="partials/commentList"/>
+				
+				<p th:if="${movie.num_mZone_comments!=null and movie.num_mZone_comments>10}">
+					<a class="button is-info" th:href="${'/movieComment?movieId='+movie.id}" 
+					th:text="${'View all '+movie.num_mZone_comments+' comments'}"/>
+				</p>
+        	</div>
+        	<div th:unless="${movie != null}" style="color:#FFFFFF;" th:include="partials/noMovie"/>
+        </div>
+    </div>
+</body>
+
+</html>

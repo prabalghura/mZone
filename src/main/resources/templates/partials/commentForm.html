@@ -1,0 +1,7 @@
+<form action="/movieComment" id="commentform" method="post">
+	<textarea name="comment" form="commentform" class="textarea" style="background: #111111; width: 90%; color: #d2d2d2; 
+	resize: vertical; margin-bottom: 10px; height:50px;" th:required="required"
+	th:placeholder="${'What did you think of '+movie.title+'? Join the conversation here.'}"/>
+	<input type="hidden" name="movieId" th:value="${movie.id}" />
+	<input style="margin-left:7px;" class="button is-primary" type="submit" value="Submit"/>
+</form>

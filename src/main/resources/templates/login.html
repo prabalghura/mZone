@@ -1,0 +1,99 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorator="default">
+
+<body>
+    <div layout:fragment="content" class="row">
+        <div class="col-xs-8 col-md-8" align="center">
+            <div>
+
+                <div class="column is-4">
+                    <div th:if="${signupError != null}">
+                        <div class="notification is-warning">
+                            There's an error with your Sign Up. <span th:text="${signupError}"></span>
+                        </div>
+                    </div>
+                    <h3 class="title is-3">New User?</h3>
+                    <h5 class="subtitle is-5">Make an account by filling out the form below.</h5>
+                    <form action="/signup" style="width:400px;">
+                        <div class="field">
+                            <p class="control has-icons-left">
+                                <input class="input" type="text" placeholder="Name" name="name" th:required="required"/>
+                                <span class="icon is-small is-left">
+									<i class="fa fa-user"></i>
+								</span>
+                            </p>
+                        </div>
+                        <div class="field">
+                            <p class="control has-icons-left">
+                                <input class="input" type="email" placeholder="Email" name="email" th:required="required"/>
+                                <span class="icon is-small is-left">
+									<i class="fa fa-envelope"></i>
+								</span>
+                            </p>
+                        </div>
+                        <div class="field">
+                            <p class="control has-icons-left">
+                                <input class="input" type="password" placeholder="Password" name="password" th:required="required"/>
+                                <span class="icon is-small is-left">
+									<i class="fa fa-lock"></i>
+								</span>
+                            </p>
+                        </div>
+                        <div class="field">
+                            <p class="control has-icons-left">
+                                <input class="input" type="password" placeholder="Confirm Password" name="confirmpassword" th:required="required"/>
+                                <span class="icon is-small is-left">
+									<i class="fa fa-lock"></i>
+								</span>
+                            </p>
+                        </div>
+                        <input type="hidden" name="loginPath" th:value="${loginPath}" />
+
+                        <div class="field">
+                            <p class="control">
+                                <button type="submit" class="button is-primary">Sign Up</button>
+                            </p>
+                        </div>
+
+                    </form>
+                </div>
+                
+                <div class="column is-4" id="signupform">
+                    <div th:if="${loginError != null}">
+                        <div class="notification is-danger">
+                            There's an error with your login. <span th:text="${loginError}"></span>
+                        </div>
+                    </div>
+                    <h3 class="title is-3">Already have an account?</h3>
+                    <h5 class="subtitle is-5">Log in with your email and password here.</h5>
+                    <form action="/logup" style="width:400px;">
+                        <div class="field">
+                            <p class="control has-icons-left">
+                                <input class="input" type="email" placeholder="Email" name="email" th:required="required"/>
+                                <span class="icon is-small is-left">
+									<i class="fa fa-envelope"></i>
+								</span>
+                            </p>
+                        </div>
+                        <div class="field">
+                            <p class="control has-icons-left">
+                                <input class="input" type="password" placeholder="Password" name="password" th:required="required"/>
+                                <span class="icon is-small is-left">
+									<i class="fa fa-lock"></i>
+								</span>
+                            </p>
+                        </div>
+                        <input type="hidden" name="loginPath" th:value="${loginPath}"/>
+                        <div class="field">
+                            <p class="control">
+                            	<button type="submit" class="button is-info">Log In</button>
+                            </p>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
